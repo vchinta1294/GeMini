@@ -15,7 +15,7 @@ from src.dataset import *
 from src.dataloader import DataCollatorForMultimodalInput, DataCollatorForMultimodalInput_LateFusion
 from src.trainer import MultilabelTrainer_KMIL
 from src.training_args import ModelArguments, DataArguments, DiagnosisTrainingArguments
-from src.vit import VisionTransformer
+#from src.vit import VisionTransformer
 
 from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_score, accuracy_score
 logger = logging.get_logger(__name__)

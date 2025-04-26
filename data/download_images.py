@@ -23,26 +23,26 @@ import shutil
 #     json.dump(data_identifiers, f)
 # raise ValueError
 
-# data_dir = "/data1/zhouhongyu/MIMIC-CXR/physionet.org/files/mimicv/data"
+data_dir = "../mimic/physionet.org/files/mimic-cxr-jpg/2.0.0/"
 
-# unique_image_paths = []
-# for idx, values in tqdm(data_indexes.items()):
-#     subject_id, hamd_id, stay_id = values
-#
-#     current_data_path = os.path.join(data_dir, subject_id, hamd_id, stay_id)
-#     hosp_ed_cxr_df = pd.read_csv(f'{current_data_path}/hosp_ed_cxr_data.csv')
-#
-#     for idx, row in hosp_ed_cxr_df.iterrows():
-#         img_path = 'p' + str(row['subject_id'])[:2] + '/p' + \
-#                    str(row['subject_id']) + '/s' + str(row['study_id']) + '/' + row['dicom_id'] + '.jpg'
-#         unique_image_paths.append(img_path)
+ unique_image_paths = []
+ for idx, values in tqdm(data_indexes.items()):
+     subject_id, hamd_id, stay_id = values
+
+     current_data_path = os.path.join(data_dir, subject_id, hamd_id, stay_id)
+     hosp_ed_cxr_df = pd.read_csv(f'{current_data_path}/hosp_ed_cxr_data.csv')
+
+     for idx, row in hosp_ed_cxr_df.iterrows():
+         img_path = 'p' + str(row['subject_id'])[:2] + '/p' + \
+                    str(row['subject_id']) + '/s' + str(row['study_id']) + '/' + row['dicom_id'] + '.jpg'
+         unique_image_paths.append(img_path)
 
 
 
-USER="YOUR_USERNAME"
-PASSWORD="YOUR_PASSWORD"
-CXR_SAVE_DIR="data/MMCaD_CXR"
-os.makedirs(CXR_SAVE_DIR, exist_ok=True)
+#USER="YOUR_USERNAME"
+#PASSWORD="YOUR_PASSWORD"
+#CXR_SAVE_DIR="data/MMCaD_CXR"
+#os.makedirs(CXR_SAVE_DIR, exist_ok=True)
 
 with open('unique_image_paths.json','r') as f:
     unique_image_paths = json.load(f)

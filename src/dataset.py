@@ -158,20 +158,21 @@ class MMCaD(Dataset):
         all_icd_code_dict = dict(collections.Counter(all_icd_code_dict))
         self.diagnosis_label_ids = {k: v for k, v in all_icd_code_dict.items() if
                                     v > self.icd_diagnosis_threshold}
-
         # Extracting diagnosis embeddings
         print('Extracting diagnosis text embeddings')
         icd_diagnoses_definition_dict = pd.read_csv(os.path.join(self.prepared_data_path, 'mimiciv/hosp/d_icd_diagnoses.csv.gz'),
                                                     compression='gzip')
-
+        print(len(icd_diagnoses_definition_dict))
         # only select diagnosis defined in mimic-iv hosp icd_diagnoses_definition_dict
         self.diagnosis_label_ids = {k: v for k, v in self.diagnosis_label_ids.items() if
                                     len(icd_diagnoses_definition_dict[
                                             icd_diagnoses_definition_dict['icd_code'] == k]) > 0}
 
         self.diagnosis_appearence_counts = list(self.diagnosis_label_ids.values())
-
-        del self.diagnosis_label_ids['4149']
+        print(self.diagnosis_label_ids)
+        if '4149' in self.diagnosis_label_ids:
+         if '4149' in self.diagnosis_label_ids:
+            del self.diagnosis_label_ids['4149']
 
         # reset index for diagnosis labels
         counter = 0
@@ -192,7 +193,11 @@ class MMCaD(Dataset):
             diagnosis_text_tokens = {k: v.cuda() for k,v in  diagnosis_text_tokens.items()}
             outputs = pretrained_model(**diagnosis_text_tokens)
             diagnosis_text_embeddings.append((outputs.last_hidden_state[:,0,:]).detach().cpu())
-        self.diagnosis_text_embeddings = torch.concat(diagnosis_text_embeddings,dim=0)
+        if diagnosis_text_embeddings:
+            self.diagnosis_text_embeddings = torch.concat(diagnosis_text_embeddings, dim=0)
+        else:
+            print('Warning: Empty diagnosis text embeddings list. Creating dummy embeddings.')
+            self.diagnosis_text_embeddings = torch.zeros(1, 768)  # Create dummy embedding
 
 
         self.num_labels = len(self.diagnosis_label_ids)

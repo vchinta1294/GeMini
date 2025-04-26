@@ -2,8 +2,7 @@
 
 OUTPUT_DIR="output/GEMINI"
 DATA_DIR='data/MMCaD'
-CXR_DIR='data/physionet.org/files/mimic-cxr-jpg/2.0.0/files/'
-
+CXR_DIR='/home/vchinta/mimic/physionet.org/files/mimic-cxr-jpg/2.0.0/files/'
 PREPARED_DATA_PATH='data/'
 TRAIN_IDX_PATH='data/train_idx.json'
 VAL_IDX_PATH='data/val_idx.json'
@@ -15,7 +14,7 @@ ICD_DIAGNOSIS_THRESHOLD=100
 TEXT_MODEL_PATH="models/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext"
 IMG_MODEL_PATH16="models/vit-base-patch16-224-in21k"
 IMG_MODEL_PATH32="models/vit-base-patch32-224-in21k"
-CHECKPOINT="output/GEMINI"
+CHECKPOINT="output/GEMINI/pretrained"
 
 # Train
 TRAIN_EPOCHS=30
